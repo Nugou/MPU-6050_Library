@@ -3,29 +3,32 @@
 
 class MPUX {
 	private:
-		byte error, address;
+		byte error_mpu, address;
 		
 		int nDevices;
 		int MPU;
 		unsigned long timeCompute, lastCompute;
-		unsigned long realTime, lastTimte;
+		unsigned long realTime, lastTime;
 		
 		double value, lastValue;		
 		double GyX, GyY, GyZ, Tmp, AcX, AcY, AcZ;
+		double GyX_End, GyY_End, GyZ_End, Tmp_End, AcX_End, AcY_End, AcZ_End;
 		double PID;
 		double P, I, D;
 		double kP, kI, kD;
-		double targertPoint;
+		double TargetPoint, error;
 		double minRangeOutput, maxRangeOutput;
 		
 		boolean setRange;
 		
-		double PID(double);
+		double Process(double);
+		int addressMPU();
+		void init();
 		
 	
 	public:
-		MPUX();
-		void Compute();
+		MPUX(int);
+		void compute();
 		double getGyX();
 		double getGyY();
 		double getGyZ();

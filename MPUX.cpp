@@ -14,69 +14,30 @@
 #include <Wire.h>
 
 
-MPUX::MPUX(){	
-
-	MPU = addressMPU();
+MPUX::MPUX(int address){	
+	Serial.println("TEste");
+	MPU = address;
 	Wire.begin();
 	Wire.beginTransmission(MPU);
 	Wire.write(0); 
 	Wire.endTransmission(true);
-	
+	init();
 }
 
-void init(){
+void MPUX::init(){
 	timeCompute = 5;
 	kP = 0.0056;
 	kI = 0.0;
 	kD = 0.0;
-	targetPoint = 0.0;
+	TargetPoint = 0.0;
 	setRange = false;
+	maxRangeOutput = 0;
+	minRangeOutput = 0;
 }
 
-int addressMPU(){
-	Wire.begin();           
-     
-	nDevices = 0;
-	for(address = 1; address < 127; address++ ){
-		// The i2c_scanner uses the return value of
-		// the Write.endTransmisstion to see if
-		// a device did acknowledge to the address.
-		Wire.beginTransmission(address);
-		error = Wire.endTransmission();
-        if (error == 0){
-			//Serial.print("I2C device encontrado no endereço 0x");
-			if (address<16){
-				Serial.print("0");
-			}
-			//Serial.print(address,HEX);
-			//Serial.println("  !");
-     
-			nDevices++;
-		}else if (error==4){
-			//Serial.print("Erro desconhecido no endereço 0x");
-			if (address<16){
-				Serial.print("0");
-			}
-			//Serial.println(address,HEX);
-		}    
-	}
-	if (nDevices == 0){
-		//Serial.println("Nenhum I2C encontrado\n");
-	}else{
-		//Serial.println("Concluido\n");
-	}
-	return int(address,HEX);
-}
 
-boolean MPUX::available(){
-	if(nDevices > 0){
-		return true;
-	}
-	return false;
-}
-
-void MPUX::Compute(){
-	if(lastCompute >= millis()){
+void MPUX::compute(){
+	if(lastCompute <= millis()){
 		lastCompute = millis() + timeCompute; 
 		Wire.beginTransmission(MPU);
 		Wire.write(0x3B);  // starting with register 0x3B (GYRO_XOUT_H)
@@ -93,9 +54,6 @@ void MPUX::Compute(){
 		AcX=Wire.read()<<8|Wire.read(); //0x43 (ACCEL_XOUT_H) & 0x44 (ACCEL_XOUT_L)
 		AcY=Wire.read()<<8|Wire.read(); //0x45 (ACCEL_YOUT_H) & 0x46 (ACCEL_YOUT_L)
 		AcZ=Wire.read()<<8|Wire.read(); //0x47 (ACCEL_ZOUT_H) & 0x48 (ACCEL_ZOUT_L)
-		
-		TempCel = Tmp/340.00+36.53;
-		TempFah = 1.8(Tmp/340.00+36.53) + 32;
 	}
 }
 
@@ -112,11 +70,13 @@ double MPUX::getGyZ(){
 }
 
 double MPUX::getTmpCel(){ 
-	return Tmp/340.00+36.53;
+	Tmp_End = Tmp/340.00+36.53;
+	return Tmp_End;
 }
 
 double MPUX::getTmpFah(){ //f = 1.8c + 32
-	return 1.8(Tmp/340.00+36.53) + 32;
+	Tmp_End = 1.8 * (Tmp/340.00+36.53) + 32;
+	return Tmp_End;
 }
 
 double MPUX::getAcX(){
@@ -133,7 +93,7 @@ double MPUX::getAcZ(){
 
 //Com PID
 
-double MPUX::PID(double value){
+double MPUX::Process(double value){
 	error = TargetPoint - value;
 	
 	realTime = (millis() - lastTime)/1000.0;
@@ -179,25 +139,31 @@ void MPUX::setConstants(double _kP, double _kI, double _kD){
 //fim exec PID
 
 double MPUX::getGyXPID(){
-	return MPUX::PID(MPUX::getGyX());
+	GyX_End = Process(getGyX());
+	return GyX_End;
 }
 
 double MPUX::getGyYPID(){
-	return MPUX::PID(MPUX::getGyY());
+	GyY_End = Process(getGyY());
+	return GyY_End;
 }
 
 double MPUX::getGyZPID(){
-	return MPUX::PID(MPUX::getGyZ());
+	GyZ_End = Process(getGyZ());
+	return GyZ_End;
 }
 
 double MPUX::getAcXPID(){
-	return MPUX::PID(MPUX::getAcX());
+	AcX_End = Process(getAcX());
+	return AcX_End;
 }
 
 double MPUX::getAcYPID(){
-	return MPUX::PID(MPUX::getAcY());
+	AcY_End = Process(getAcY());
+	return AcY_End;
 }
 
 double MPUX::getAcZPID(){
-	return MPUX::PID(MPUX::getAcZ());
+	AcZ_End = Process(getAcZ());
+	return AcZ_End;
 }

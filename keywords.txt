@@ -1,0 +1,37 @@
+#######################################
+# Syntax Coloring Map PS2X
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MPUX	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+compute			KEYWORD2
+getGyX			KEYWORD2
+getGyY			KEYWORD2
+getGyZ			KEYWORD2
+getTmpCel		KEYWORD2
+getTmpFah		KEYWORD2
+getAcX			KEYWORD2
+getAcY			KEYWORD2
+getAcZ			KEYWORD2
+getGyXPID		KEYWORD2
+getGyYPID		KEYWORD2
+getGyZPID		KEYWORD2
+getAcXPID		KEYWORD2
+getAcYPID		KEYWORD2
+getAcZPID		KEYWORD2
+setConstants	KEYWORD2
+setOutputLimits	KEYWORD2
+setTargetPoint	KEYWORD2
+setNotRange		KEYWORD2
+
+
+#######################################
+# Constants (LITERAL1)
+#######################################
