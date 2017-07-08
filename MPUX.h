@@ -45,6 +45,7 @@ class MPUX {
 		void setNotRange();
 		void setTargetPoint(int);
 		void setOutputLimits(double, double);
+		void setConstants(double, double, double);
 };
 #endif
 

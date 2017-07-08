@@ -170,6 +170,12 @@ void MPUX::setNotRange(){
 	setRange = false;
 }
 
+void MPUX::setConstants(double _kP, double _kI, double _kD){
+	kP = _kP;
+	kI = _kI;
+	kD = _kD;
+}
+
 //fim exec PID
 
 double MPUX::getGyXPID(){
