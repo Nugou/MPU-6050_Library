@@ -21,16 +21,6 @@ getTmpFah		KEYWORD2
 getAcX			KEYWORD2
 getAcY			KEYWORD2
 getAcZ			KEYWORD2
-getGyXPID		KEYWORD2
-getGyYPID		KEYWORD2
-getGyZPID		KEYWORD2
-getAcXPID		KEYWORD2
-getAcYPID		KEYWORD2
-getAcZPID		KEYWORD2
-setConstants	KEYWORD2
-setOutputLimits	KEYWORD2
-setTargetPoint	KEYWORD2
-setNotRange		KEYWORD2
 
 
 #######################################

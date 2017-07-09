@@ -16,7 +16,6 @@
 
 MPUX::MPUX(int address){	
 	MPU = address;
-	//init();
 }
 
 void MPUX::init(){
@@ -28,13 +27,6 @@ void MPUX::init(){
 	
 	timeCompute = 5;
 	lastCompute = 0;
-	kP = 0.0056;
-	kI = 0.0;
-	kD = 0.0;
-	TargetPoint = 0.0;
-	setRange = false;
-	maxRangeOutput = 0;
-	minRangeOutput = 0;
 }
 
 
@@ -91,81 +83,4 @@ double MPUX::getAcY(){
 
 double MPUX::getAcZ(){
 	return AcZ;
-}
-
-//Com PID
-
-double MPUX::Process(double value){
-	error = TargetPoint - value;
-	
-	realTime = (millis() - lastTime)/1000.0;
-	lastTime = millis();
-	
-	P = error * kP;
-	I += error * kI / realTime;
-	D = (lastValue - value) * kD / realTime;
-	
-	lastValue = value;
-	
-	PID = P + I + D;
-	
-	if(PID > maxRangeOutput && setRange){
-		PID = maxRangeOutput;
-	}else if(PID < minRangeOutput && setRange){
-		PID = minRangeOutput;
-	}
-	
-	return PID;
-}
-
-void MPUX::setOutputLimits(double Min, double Max){
-	minRangeOutput = Min;
-	maxRangeOutput = Max;
-	setRange = true;
-}
-
-void MPUX::setTargetPoint(int new_TargetPoint){
-	TargetPoint = new_TargetPoint;
-}
-
-void MPUX::setNotRange(){
-	setRange = false;
-}
-
-void MPUX::setConstants(double _kP, double _kI, double _kD){
-	kP = _kP;
-	kI = _kI;
-	kD = _kD;
-}
-
-//fim exec PID
-
-double MPUX::getGyXPID(){
-	GyX_End = Process(getGyX());
-	return GyX_End;
-}
-
-double MPUX::getGyYPID(){
-	GyY_End = Process(getGyY());
-	return GyY_End;
-}
-
-double MPUX::getGyZPID(){
-	GyZ_End = Process(getGyZ());
-	return GyZ_End;
-}
-
-double MPUX::getAcXPID(){
-	AcX_End = Process(getAcX());
-	return AcX_End;
-}
-
-double MPUX::getAcYPID(){
-	AcY_End = Process(getAcY());
-	return AcY_End;
-}
-
-double MPUX::getAcZPID(){
-	AcZ_End = Process(getAcZ());
-	return AcZ_End;
 }
