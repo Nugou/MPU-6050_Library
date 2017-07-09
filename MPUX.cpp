@@ -1,5 +1,5 @@
 /**********************************************************************************************
- * Arduino MPU-6050 Library - Version 0.1
+ * Arduino MPU-6050 Library - Version 1.2
  * by Alessandro Vinicius <alessandro.vncs@gmail.com>
  *
  **********************************************************************************************/
@@ -20,7 +20,7 @@ MPUX::MPUX(int address){
 
 void MPUX::init(){
 	Wire.begin();
-	Wire.beginTransmission(0x68);
+	Wire.beginTransmission(MPU);
 	Wire.write(0x6B); 
 	Wire.write(0); 
 	Wire.endTransmission(true);
@@ -33,12 +33,12 @@ void MPUX::init(){
 void MPUX::compute(){
 	if(lastCompute <= millis()){
 		lastCompute = millis() + timeCompute; 
-		Wire.beginTransmission(0x68);
+		Wire.beginTransmission(MPU);
 		Wire.write(0x3B);  // starting with register 0x3B (GYRO_XOUT_H)
 		Wire.endTransmission(false);
 		
 		//Solicita os dados do sensor
-		Wire.requestFrom(0x68,14,true);  
+		Wire.requestFrom(MPU,14,true);  
 		
 		//Armazena o valor dos sensores nas variaveis correspondentes
 		GyX=Wire.read()<<8|Wire.read(); //0x3B (GYRO_XOUT_H) & 0x3C (GYRO_XOUT_L)     
