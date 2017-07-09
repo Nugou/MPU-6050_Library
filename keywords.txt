@@ -11,6 +11,7 @@ MPUX	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
+init			KEYWORD2
 compute			KEYWORD2
 getGyX			KEYWORD2
 getGyY			KEYWORD2

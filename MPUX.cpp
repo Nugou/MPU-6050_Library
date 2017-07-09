@@ -15,17 +15,19 @@
 
 
 MPUX::MPUX(int address){	
-	Serial.println("TEste");
 	MPU = address;
-	Wire.begin();
-	Wire.beginTransmission(MPU);
-	Wire.write(0); 
-	Wire.endTransmission(true);
-	init();
+	//init();
 }
 
 void MPUX::init(){
+	Wire.begin();
+	Wire.beginTransmission(0x68);
+	Wire.write(0x6B); 
+	Wire.write(0); 
+	Wire.endTransmission(true);
+	
 	timeCompute = 5;
+	lastCompute = 0;
 	kP = 0.0056;
 	kI = 0.0;
 	kD = 0.0;
@@ -39,12 +41,12 @@ void MPUX::init(){
 void MPUX::compute(){
 	if(lastCompute <= millis()){
 		lastCompute = millis() + timeCompute; 
-		Wire.beginTransmission(MPU);
+		Wire.beginTransmission(0x68);
 		Wire.write(0x3B);  // starting with register 0x3B (GYRO_XOUT_H)
 		Wire.endTransmission(false);
 		
 		//Solicita os dados do sensor
-		Wire.requestFrom(MPU,14,true);  
+		Wire.requestFrom(0x68,14,true);  
 		
 		//Armazena o valor dos sensores nas variaveis correspondentes
 		GyX=Wire.read()<<8|Wire.read(); //0x3B (GYRO_XOUT_H) & 0x3C (GYRO_XOUT_L)     

@@ -19,15 +19,14 @@ class MPUX {
 		double TargetPoint, error;
 		double minRangeOutput, maxRangeOutput;
 		
-		boolean setRange;
+		bool setRange;
 		
 		double Process(double);
-		int addressMPU();
-		void init();
 		
 	
 	public:
 		MPUX(int);
+		void init();
 		void compute();
 		double getGyX();
 		double getGyY();
