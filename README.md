@@ -9,9 +9,9 @@ To install, download and extract to the folder 'libraries' of arduino(C:\Program
 
 # Comands
 
-Instance: MPUX MPU(address); -> Instance with int address of MPU-6050, usually '0x68';
+Instance: MPUX MYMPU(int); -> Instance with address of MPU-6050, usually '0x68';
 
-*-> name of reference;
+*-> name of reference like 'MYMPU';
 
 To start library, use comands: 
 

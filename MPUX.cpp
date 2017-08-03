@@ -32,7 +32,7 @@ void MPUX::init(){
 
 void MPUX::compute(){
 	if(lastCompute <= millis()){
-		lastCompute = millis() + timeCompute; 
+		lastCompute += timeCompute; 
 		Wire.beginTransmission(MPU);
 		Wire.write(0x3B);  // starting with register 0x3B (GYRO_XOUT_H)
 		Wire.endTransmission(false);
