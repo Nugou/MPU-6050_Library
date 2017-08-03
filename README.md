@@ -3,7 +3,7 @@
 This library of easy access provides comands to receive all that module MPU-6050 offers, Gyroscope, Accelerometer and Temperature.
 
 
-# Installacion
+# Installation
 
 To install, download and extract to the folder 'libraries' of arduino(C:\Program Files (x86)\Arduino\libraries\), done; 
 
