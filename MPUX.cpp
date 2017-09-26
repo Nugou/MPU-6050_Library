@@ -18,7 +18,7 @@ MPUX::MPUX(int address){
 	MPU = address;
 }
 
-void MPUX::init(){
+void MPUX::begin(){
 	Wire.begin();
 	Wire.beginTransmission(MPU);
 	Wire.write(0x6B); 

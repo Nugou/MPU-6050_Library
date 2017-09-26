@@ -15,7 +15,7 @@ Instance: MPUX MYMPU(int); -> Instance with address of MPU-6050, usually '0x68';
 
 To start library, use comands: 
 
-* *.init(); -> This does some parameters to start;  
+* *.begin(); -> This does some parameters to start;  
 * *.compute(); -> This does MPU-6050 calculate: temperature, parameters of gyroscope and parameters of accelerometers;
 
 	--After '*.compute();', you should take parameters of MPU-6050 like Gyroscope(that think more important);

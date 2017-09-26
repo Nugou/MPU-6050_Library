@@ -13,7 +13,7 @@ class MPUX {
 	
 	public:
 		MPUX(int);
-		void init();
+		void begin();
 		void compute();
 		double getGyX();
 		double getGyY();
